@@ -1,19 +1,36 @@
-import React from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {FlatList, StyleSheet, RefreshControl} from 'react-native';
 import PalettePreview from '../components/PalletePreview';
-import {SOLARIZED, FRONTEND_MASTERS, RAINBOW} from '../utils/colors';
 
-const COLOR_PALETTES = [
-  {paletteName: 'Solarized', colors: SOLARIZED},
-  {paletteName: 'Frontend Masters', colors: FRONTEND_MASTERS},
-  {paletteName: 'Rainbow', colors: RAINBOW},
-];
+const URL = 'https://color-palette-api.kadikraman.now.sh/palettes';
 
 const Home = ({navigation}) => {
+  const [colorPalettes, setColorPalettes] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const apicolors = useCallback(async () => {
+    let response = await fetch(URL);
+    if (response.ok) {
+      const colors = await response.json();
+      setColorPalettes(colors);
+    }
+  }, []);
+
+  useEffect(() => {
+    apicolors();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleRefreshing = useCallback(async () => {
+    setIsRefreshing(true);
+    await apicolors();
+    setIsRefreshing(false);
+  }, []);
+
   return (
     <FlatList
       style={styles.list}
-      data={COLOR_PALETTES}
+      data={colorPalettes}
       keyExtractor={(item) => item.paletteName}
       renderItem={({item}) => (
         <PalettePreview
@@ -23,6 +40,8 @@ const Home = ({navigation}) => {
           colorPalette={item}
         />
       )}
+      refreshing={isRefreshing}
+      onRefresh={handleRefreshing}
     />
   );
 };
