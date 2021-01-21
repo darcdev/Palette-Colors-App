@@ -18,8 +18,8 @@ The idea of the project is to build an application with a color palette, where u
 
 <br/>
 <img src="https://i.ibb.co/7vx0jc3/1.gif?raw=true" alt="Kitten"
-  title="A cute kitten" width="200" height="350" style="margin-right : 30px" /><img src="https://i.ibb.co/RyyfRy7/2.gif?raw=true" alt="Kitten"
-  title="A cute kitten" width="200" height="350" />
+  title="A cute kitten" width="350" height="550" style="margin-right : 30px display:inline-block" /><img src="https://i.ibb.co/RyyfRy7/2.gif?raw=true" style="display:inline-block" alt="Kitten"
+  title="A cute kitten" width="350" height="550" />
 
 ### Credits
 
